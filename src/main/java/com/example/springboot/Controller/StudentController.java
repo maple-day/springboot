@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ public class StudentController {
     private StudentService studentService;
     
     @RequestMapping("/{id}/{name}")
+    @ResponseBody
     public String addDate(@PathVariable Integer id,@PathVariable String name){
         for (int i=0;i<10;i++){
             Student student = new Student();
@@ -46,11 +48,13 @@ public class StudentController {
     }
     
     @RequestMapping("/helloworld")
+    @ResponseBody
     public String sayHello(){
         return "hello world";
     }
     
     @RequestMapping("/relation/{id}")
+    @ResponseBody
     public String Relation(@PathVariable("id") Integer id){
         Teacher teacher = teacherRepository.findOne(id);
         Student student = studentRepository.findOne(id);
@@ -62,22 +66,26 @@ public class StudentController {
     }
     
     @RequestMapping("/findTeacherAndStudent/{id}")
+    @ResponseBody
     public Student findTeacherAndStudent(@PathVariable("id") Integer id){
         Student student = studentRepository.findStudentAndTeacherById(id);
         return student;
     }
     @RequestMapping("/{id}")
+    @ResponseBody
     public Teacher findById(@PathVariable("id") Integer id){
         return teacherRepository.findOne(id);
     }
     
     @RequestMapping("/findAll")
+    @ResponseBody
     public List<Student> findAll(){
         List<Student> list = studentRepository.findAll();
         return list;
     }
     
     @RequestMapping("/findStudent/{id}")
+    @ResponseBody
     public Student findStudentById(@PathVariable("id") Integer id){
         Student student = studentService.findStudentById(id);
 //        student.getTeachers();
