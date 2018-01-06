@@ -6,15 +6,16 @@ import com.example.springboot.entity.Student;
 import com.example.springboot.entity.Teacher;
 import com.example.springboot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@RestController
+@Controller
 public class StudentController {
     
     @Autowired
@@ -78,6 +79,16 @@ public class StudentController {
     
     @RequestMapping("/findStudent/{id}")
     public Student findStudentById(@PathVariable("id") Integer id){
-        return studentService.findStudentById(id);
+        Student student = studentService.findStudentById(id);
+//        student.getTeachers();
+        return student;
+    }
+    
+    @RequestMapping("/student/{id}")
+    public String toStudent(@PathVariable("id") Integer id, Model model){
+        Student student = studentService.findStudentById(id);
+        model.addAttribute("student",student);
+        model.addAttribute("hello","hello springboot");
+        return "student";
     }
 }
